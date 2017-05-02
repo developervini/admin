@@ -1,0 +1,92 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<title>Clientes | GiBR</title>
+<section class="content">
+	<div class="box">
+		<div class="box-header">
+			<h3 class="box-title">Clientes</h3>
+		</div>
+		<div class="box-body table-responsive">
+			<table class="table table-striped table-hover table-bordered" id="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Cliente</th>
+						<th>Subdomínio</th>
+						<th>Telefone</th>
+						<th>Email</th>
+						<th>Observações</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for client in clients %}
+					<tr>
+						{% if client.active == 0 %}
+						<td align="center"><span class="label label-success">Funcional</span></td>
+						{% else %}
+						<td align="center"><span class="label label-danger">Bloqueado</span></td>
+						{% endif %}
+						<td>{{ client.client }}</td>
+						<td><a href="http://{{ client.subdomain }}" target="_blank">{{ client.subdomain }}</a></td>
+						<td>{{ client.phone_client }}</td>
+						<td>{{ client.mail_client }}</td>
+						<td>{{ client.obs }}</td>
+						<td>                    
+							<div class="btn-group">
+								<button type="button" class="btn btn-default btn-flat"><i class="fa fa-trash"></i></button>
+								<a role="button" href="/editar-cliente/id={{ client.id }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
+								<a role="button" href="/cliente-getid/id={{ client.id }}" class="btn btn-default btn-flat"><i class="fa fa-database"></i></a>
+								<a role="button" href="/cliente/id={{ client.id }}" class="btn btn-default btn-flat"><i class="fa fa-eye"></i></a>
+								<button data-id="{{ client.id }}" class="myModal btn btn-default btn-flat" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
+							</div>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Novo Boleto</h4>
+			</div>
+			<form method="POST" action="/cadastrar-boleto"  enctype="multipart/form-data">
+				<div class="modal-body">
+					<input type="hidden" id="client" name="client">
+					<div class="row">
+						<div class="col-sm-12">
+							<label>Descrição</label>
+							<textarea class="form-control" name="billet"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<label>Arquivo</label>
+							<input type="file" name="file">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">Salvar</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).on("click", ".myModal", function () {
+		var client = $(this).data('id');
+		$(".modal-body #client").val( client );
+	});
+</script>
+{% endblock %}

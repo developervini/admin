@@ -1,0 +1,92 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<title>Cadastrar Contrato | GiBR</title>
+<section class="content-header">
+	<h1>
+		Cadastrar Contrato
+	</h1>
+</section>
+<section class="content">
+	<div class="box box-default">
+		<form method="POST" action="/cadastrar-contrato">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-sm-4">
+						<h5>Cliente</h5>
+						<select class="form-control" name="client_id">
+							{% for client in clients %}
+								{% if client.active == 0 %}
+									<option value="{{ client.id }}">{{ client.client }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+					<div class="col-sm-2">
+						<h5>Mensalidade</h5>
+						<input type="text" name="value" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<h5>Meses</h5>
+						<input type="text" name="month" class="form-control">
+					</div>
+					<div class="col-sm-3">
+						<h5>Início</h5>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</div>
+							<input type="date" class="form-control"  name="start">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-2">
+				        <h5>Treinamento</h5>
+			            <div class="form-group">
+			            	<label>
+			                	<input type="radio" name="training" class="flat-red" value="1" checked>
+			                  Não
+			                </label>
+			                <label></label>
+			                <label>
+			                	<input type="radio" name="training" class="flat-red" value="0">
+			                  Sim
+			                </label>
+			              </div>
+		       		</div>
+		       		<div class="col-sm-2">
+						<h5>Valor do Treinamento</h5>
+						<input type="text" name="amount_training" class="form-control">
+					</div>
+					<div class="col-sm-3">
+						<h5>Vencimento</h5>
+						<select name="pay_day" class="form-control">
+							{% for i in 1..31 %}
+							   <option value="{{ i }}">{{ i }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<h5>Observações</h5>
+						<textarea rows="6" name="obs" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="pull-right">
+					<a role="button" href="/clientes" class="btn btn-flat btn-danger">Cancelar</a>
+					<button type="submit" class="btn btn-flat btn-success">Salvar</button>		
+				</div>          
+			</div>		
+		</form>
+	</div>
+</section>
+
+<script type="text/javascript">
+	$("[data-mask]").inputmask();
+</script>
+
+{% endblock %}

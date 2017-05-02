@@ -1,0 +1,100 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<title>{{ client.client }} | GiBR</title>
+<section class="content">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="box box-default">
+				<div class="box-body box-profile">
+					<h3 class="profile-username text-center">{{ client.client }}</h3>
+					<p class="text-muted text-center">{{ client.office }}</p>
+					<ul class="list-group list-group-unbordered">
+						<li class="list-group-item"><b>Subdomínio</b> <a class="pull-right" href="http://{{ client.subdomain }}" target="_blank">{{ client.subdomain }}</a></li>
+						<li class="list-group-item"><b>Email</b> <span class="pull-right">{{ client.mail_client }}</span></li>
+						<li class="list-group-item"><b>Telefone</b> <span class="pull-right">{{ client.phone_client }}</span></li>
+						<li class="list-group-item"><b>Aniversário</b> <span class="pull-right">{{ client.birth_client|date('d/m/Y') }}</span></li>
+						<li class="list-group-item"><b>CPF</b> <span class="pull-right">{{ client.cpf }}</span></li>	
+						<li class="list-group-item"><b>RG</b> <span class="pull-right">{{ client.rg }}</span></li>	
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="box box-default">
+				<div class="box-body">
+					<h3 class="profile-username text-center">Contrato</h3>
+					{% if contract is not null %}
+					<p class="text-muted text-center">{% if contract.status == 0 %} Ativo {% else %} Suspenso {% endif %}</p>
+					<ul class="list-group list-group-unbordered">
+						<li class="list-group-item"><b>Contrato de</b> <span class="pull-right">{{ contract.month }} meses</span></li>
+						<li class="list-group-item"><b>Início</b> <span class="pull-right">{{ contract.start|date('d/m/Y') }}</span></li>
+						<li class="list-group-item"><b>Fim</b> <span class="pull-right">{{ contract.end|date('d/m/Y') }}</span></li>
+						<li class="list-group-item"><b>Valor</b> <span class="pull-right">R$ {{ contract.amount|number_format(2, ',', '.') }}</span></li>
+						<li class="list-group-item"><b>Treinamento</b> <span class="pull-right">{% if contract.training == 0 %} Sim {% else %} Não {% endif %}</span></li>
+						<li class="list-group-item"><b>Valor do Treinamento</b> <span class="pull-right">R$ {{ contract.amount_training|number_format(2, ',', '.') }}</span></li>
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="box">
+				<div class="box-body table-responsive">
+					<h3 class="profile-username text-center pull-left">Contatos</h3>
+					<small class="pull-right"><a type="button" class="btn btn-flat btn-success" href="/cadastrar-contato/client_id={{ client.id }}"><i class="fa fa-plus"></i></a></small>
+					<table class="table table-striped table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>Contato</th>
+								<th>Função</th>
+								<th>Telefone</th>
+								<th>Email</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for contact in contacts %}
+							<tr>
+								<td>{{ contact.contact }}</td>
+								<td>{{ contact.office }}</td>
+								<td>{{ contact.phone_contact}}</td>
+								<td>{{ contact.mail_contact }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="box">
+				<div class="box-body table-responsive">
+					<h3 class="profile-username text-center">Parcelas Pendentes</h3>
+					<table class="table table-striped table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>Vencimento</th>
+								<th>Descrição</th>
+								<th>Valor</th>
+								<th>Pagar</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for portion in portions %}
+							<tr>
+								<td>{{ portion.pay_day }}/{{ portion.month_year }}</td>
+								<td>{{ portion.description }}</td>
+								<td>R$ {{ portion.value|number_format(2, ',', '.') }}</td>
+								<td><a role="button" href="/cadastrar-pagamento/{{ portion.id }}" class="btn btn-default btn-flat"><i class="fa fa-check"></i></a></td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

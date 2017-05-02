@@ -1,0 +1,38 @@
+{% extends "menu.html" %}
+
+{% block body %}
+
+<section class="content">
+
+  {% if user.manager == 1 %}
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Registro de Atividades</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive">
+        <table class="order-table table table-striped table-hover" id="tabela">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Usuário</th>
+              <th>IP Externo</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for log in logs %}
+            <tr>
+              <td>{{ log.creation_date|date('d/m/Y H:i') }}</td>
+              <td>{{ log.user_id }}</td>
+              <td>{{ log.ip }}</td>
+              <td>{{ log.description }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div><!-- /.box-body -->
+  </div><!-- /.box -->
+  {% endif %}
+</section>
+
+{% endblock %}

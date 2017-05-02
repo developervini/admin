@@ -1,0 +1,77 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<title>Cadastrar Contato | GiBR</title>
+<section class="content-header">
+	<h1>
+		Cadastrar Contato
+	</h1>
+</section>
+<section class="content">
+	<div class="box box-default">
+		<form method="POST" action="/cadastrar-contato/client_id={{ client }}">
+			<input type="hidden" name="client_id" value="{{ client }}">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-sm-5">
+						<h5>Nome</h5>
+						<input type="text" class="form-control" name="contact">
+					</div>
+					<div class="col-sm-2">
+						<h5>Sexo</h5>
+						<select class="form-control" name="sex">
+							<option value="0">Masculino</option>
+							<option value="1">Feminino</option>
+						</select>
+					</div>
+					<div class="col-sm-3">
+						<h5>Data de Nascimento</h5>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</div>
+							<input type="date" class="form-control"  name="birth_contact">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<h5>Email</h5>
+						<input type="email" class="form-control" name="mail_contact">
+					</div>
+					<div class="col-sm-2">
+						<h5>Telefone</h5>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-phone"></i>
+							</div>
+							<input type="text" name="phone_contact" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<h5>Cargo</h5>
+						<select class="form-control" name="office_contact_id">
+							{% for office in offices %}
+								{% if type.active == 0 %}
+									<option value="{{ office.id }}">{{ office.office }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="pull-right">
+					<a role="button" href="/clientes" class="btn btn-flat btn-danger">Cancelar</a>
+					<button type="submit" class="btn btn-flat btn-success">Salvar</button>		
+				</div>          
+			</div>		
+		</form>
+	</div>
+</section>
+
+<script type="text/javascript">
+	$("[data-mask]").inputmask();
+</script>
+
+{% endblock %}

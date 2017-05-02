@@ -1,0 +1,115 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<section class="content-header">
+	<h1>
+		Cadastrar Usuário
+	</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+	<div class="box box-default">
+		<div class="box-body">
+			<form method="POST" action="/usuario-novo">
+				<input type="hidden" class="form-control" id="mapcoo" name="mapcoo">
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Nome</label>
+						<input type="text" class="form-control" name="name">
+					</div>
+					<div class="col-sm-3">
+						<label>Email</label>
+						<input type="text" class="form-control" name="email">
+					</div>
+					<div class="col-sm-3">
+						<label>Nome de Usuário</label>
+						<input type="text" class="form-control" name="username">
+					</div>
+					<div class="col-sm-3">
+						<label>Senha</label>
+						<input type="password" class="form-control" name="pass">
+					</div>					
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-3">
+						<label>Localização padrão</label>
+						<input type="text" id="address" class="form-control" onblur="geocodeAddress()">
+					</div>
+					
+					<div class="col-sm-3">
+						<label>Cor do Sistema</label>
+						<select class="form-control" name="color">
+							<option value="blue">Azul</option>
+							<option value="red">Vermelho</option>
+							<option value="yellow">Amarelo</option>
+							<option value="purple">Roxo</option>
+							<option value="black">Preto</option>
+							<option value="purple">Roxo</option>
+							<option value="green">Verde</option>
+						</select>
+					</div>					
+				</div>
+				<br>
+				<label>Permissões do Usuário</label>
+				<div class="row">
+					<div class="col-sm-2">	
+						<h5>
+		                  <input type="checkbox" class="flat-red" name="cb1" value="1">
+		                  Cadastrar
+		                </h5>
+					</div>
+					<div class="col-sm-2">	
+						<h5>
+		                  <input type="checkbox" class="flat-red" name="cb2" value="1">
+		                  Editar
+		                </h5>
+					</div>
+					<div class="col-sm-2">	
+						<h5>
+		                  <input type="checkbox" class="flat-red" name="cb3" value="1">
+		                  Deletar
+		                </h5>
+					</div>			
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-block btn-success">Salvar</button>
+					</div>
+					<div class="col-sm-2">
+						<a role="button" href="/usuarios" class="btn btn-block btn-danger">Cancelar</a>
+					</div>          
+				</div>
+			</form>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+</section><!-- /.content -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<script type="text/javascript">
+
+function geocodeAddress() {
+  var geocoder = new google.maps.Geocoder();
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      alert('Centralização do Mapa: ' + address.toUpperCase());
+      document.getElementById('mapcoo').value = results[0].geometry.location.lat() + ', ' + results[0].geometry.location.lng();
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+    } else {
+      alert('Centralização do Mapa: SEM SUCESSO');
+    }
+  });
+}
+
+</script>
+
+{% endblock %}
