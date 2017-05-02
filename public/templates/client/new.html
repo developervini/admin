@@ -1,0 +1,152 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<title>Cadastrar Cliente | GiBR</title>
+<section class="content-header">
+	<h1>
+		Cadastrar Cliente
+	</h1>
+</section>
+<section class="content">
+	<div class="box box-default">
+		<form method="POST" action="/cadastrar-cliente">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-sm-4">
+						<h5>Nome</h5>
+						<input type="text" class="form-control" name="client">
+					</div>
+					<div class="col-sm-2">
+						<h5>Subdomínio</h5>
+						<input type="text" name="subdomain" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<h5>Banco de Dados</h5>
+						<input type="text" name="database" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<h5>Usuário do Banco</h5>
+						<input type="text" name="root" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<h5>Senha do Banco</h5>
+						<input type="text" name="password" class="form-control">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-2">
+						<h5>Sexo</h5>
+						<select class="form-control" name="sex">
+							<option value="0">Masculino</option>
+							<option value="1">Feminino</option>
+						</select>
+					</div>
+					<div class="col-sm-3">
+						<h5>Data de Nascimento</h5>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</div>
+							<input type="date" class="form-control"  name="birth_client">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<h5>CPF</h5>
+						<input type="text" name="cpf" class="form-control" data-inputmask='"mask": "999.999.999-99"' data-mask>
+					</div>
+					<div class="col-sm-3">
+						<h5>RG</h5>
+						<input type="text" name="rg" class="form-control" data-inputmask='"mask": "9999999999"' data-mask>
+					</div>
+					<div class="col-sm-6">
+						<h5>Email</h5>
+						<input type="email" class="form-control" name="mail_client">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-2">
+						<h5>Telefone</h5>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-phone"></i>
+							</div>
+							<input type="text" name="phone_client" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<h5>CEP</h5>
+						<input type="text" id="zipcode" name="zipcode" onblur="getCep(this.value);" class="form-control" data-inputmask='"mask": "99999-999"' data-mask>
+					</div>
+					<div class="col-sm-5">
+						<h5>Rua</h5>
+						<input type="text"  id="address" name="address" class="form-control">
+					</div>
+					<div class="col-sm-1">
+						<h5>Número</h5>
+						<input type="text"  name="number" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<h5>Complemento</h5>
+						<input type="text" name="comp" class="form-control">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<h5>Bairro</h5>
+						<input type="text" id="district" name="district" class="form-control">
+					</div>
+					<div class="col-sm-3">
+						<h5>Cidade</h5>
+						<input type="text" id="city" name="city" class="form-control">
+					</div>
+					<div class="col-sm-1">
+						<h5>Estado</h5>
+						<input type="text" id="uf" name="uf" class="form-control">
+					</div>
+					<div class="col-sm-3">
+						<h5>Cargo</h5>
+						<select class="form-control" name="office_client_id">
+							{% for office in offices %}
+							{% if type.active == 0 %}
+							<option value="{{ office.id }}">{{ office.office }}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<h5>Observações</h5>
+						<textarea rows="6" name="obs" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="pull-right">
+					<a role="button" href="/clientes" class="btn btn-flat btn-danger">Cancelar</a>
+					<button type="submit" class="btn btn-flat btn-success">Salvar</button>		
+				</div>          
+			</div>		
+		</form>
+	</div>
+</section>
+
+<script type="text/javascript">
+	$("[data-mask]").inputmask();
+	$('.select2').select2();
+	function getCep(cep){
+		$.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep="+cep, function(){            
+			if (resultadoCEP["resultado"] != 0) {
+				$("#address").val(unescape(resultadoCEP["logradouro"]));
+				$("#district").val(unescape(resultadoCEP["bairro"]));
+				$("#city").val(unescape(resultadoCEP["cidade"]));
+				$("#uf").val(unescape(resultadoCEP["uf"]));
+			}   
+		}        
+		);
+	}
+</script>
+
+{% endblock %}

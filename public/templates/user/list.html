@@ -1,0 +1,51 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<section class="content">
+
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Usuários</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive">
+        <table class="order-table table table-striped table-hover" id="tabela">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Nome de Usuário</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for userof in users %}
+            <tr style="text-transform: uppercase;"> 
+              <td>{{ userof.name }}</td>
+              <td>{{ userof.email }}</td>
+              <td>{{ userof.username }}</td>
+              <td>
+              {% if user.manager == 1 %}
+                <div class="btn-group">
+                  <a type="button" href="/usuario-excluir/{{ userof.id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                  <a type="button" href="/usuario-editar/{{ userof.id }}" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></a>
+                  <a type="button" href="/usuario-detalhes/{{ userof.id }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+                </div>
+              {% else %}
+                <div class="btn-group">
+                  <a type="button" href="/usuario-excluir/{{ user.id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                  <a type="button" href="/usuario-editar/{{ user.id }}" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></a>
+                  <a type="button" href="/usuario-detalhes/{{ user.id }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+                </div>
+              {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div><!-- /.box-body -->
+  </div><!-- /.box -->
+
+</section><!-- /.content -->
+
+
+{% endblock %}

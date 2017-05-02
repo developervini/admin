@@ -1,0 +1,31 @@
+{% extends "menu.html" %}
+
+{% block body %}
+<title>Cadastrar Subdomínio | GiBR</title>
+<section class="content-header">
+	<h1>
+		Cadastrar Subdomínio
+	</h1>
+</section>
+<section class="content">
+	<div class="box box-default">
+		<form method="POST" action="/cadastrar-subdominio">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-sm-2">
+						<h5>Subdomínio</h5>
+						<input type="text" name="subdomain" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="pull-right">
+					<a role="button" href="/clientes" class="btn btn-flat btn-danger">Cancelar</a>
+					<button type="submit" class="btn btn-flat btn-success">Salvar</button>		
+				</div>          
+			</div>		
+		</form>
+	</div>
+</section>
+
+{% endblock %}
