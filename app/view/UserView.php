@@ -72,8 +72,6 @@ function loginUser()
 {
 	$app = Slim::getInstance();
 
-	$_SESSION['other'];
-
 	if($app->request->isPost()){
 		$return = UserController::loginUser($app->request()->params());
 		
