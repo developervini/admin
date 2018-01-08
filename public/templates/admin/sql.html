@@ -1,0 +1,29 @@
+{% extends "menu.html" %} {% block body %}
+<title>Executar SQL | GiBR</title>
+<section class="content-header">
+    <h1>
+        Executar SQL
+    </h1>
+</section>
+<section class="content">
+    <div class="box box-default">
+        <form method="POST" action="/executar-sql" enctype="multipart/form-data">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h5>SQL</h5>
+                        <input type="file" class="form-control" id="upload" name="file" required="true">
+                    </div>
+                </div>
+            </div>
+            <div class=" box-footer ">
+                <div class="pull-right ">
+                    <a role="button " href="/clientes " class="btn btn-flat btn-danger ">Cancelar</a>
+                    <button type="submit " class="btn btn-flat btn-success ">Executar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

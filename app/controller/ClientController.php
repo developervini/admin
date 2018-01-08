@@ -1,7 +1,5 @@
 <?php
 
-use BoletoSimples\BankBillet;
-
 class ClientController
 {
 	public static function insertClient($data = array())
@@ -143,7 +141,6 @@ class ClientController
 	public static function listClient()
 	{
 		try {	
-
 			return Client::all();
 
 		} catch (Exception $ex) {

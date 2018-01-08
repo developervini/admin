@@ -1,11 +1,11 @@
 {
   	"require": {
         "slim/slim": "2.*",
-        "slim/views": "*",
-        "twig/twig": "*",
+        "slim/views": "0.1.*",
+        "twig/twig": "1.*",
         "twig/extensions": "*",
         "illuminate/database": "4.1.*",
-        "swiftmailer/swiftmailer" : "*"
+        "swiftmailer/swiftmailer" : "5.4.0"
 	},
 	"autoload": {
         "classmap": [
