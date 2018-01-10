@@ -26,6 +26,9 @@ $app->group('/editar',function() use ($app){
 	$app->put('-cliente/id=:id', 'auth', 'editClient');
 });
 
+$app->get('/executar-sql', 'auth', 'execSql');
+$app->post('/executar-sql', 'auth', 'execSql');
+
 $app->get('/', 'auth', 'listClient');
 
 $app->get('/login', 'loginUser');
